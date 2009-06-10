@@ -103,6 +103,20 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.15</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jms</artifactId>
+                    <groupId>javax.jms</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jmxri</artifactId>
+                    <groupId>com.sun.jmx</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jmxtools</artifactId>
+                    <groupId>com.sun.jdmk</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -193,5 +207,7 @@
         <junit.version>4.4</junit.version>
         <javadoc.jdk.href>http://java.sun.com/javase/6/docs/api/</javadoc.jdk.href>
         <spring.version>2.5.6</spring.version>
+        <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
     </properties>
 </project>
+
