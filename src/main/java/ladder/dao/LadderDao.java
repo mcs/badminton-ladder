@@ -3,8 +3,7 @@ package ladder.dao;
 import ladder.model.Ladder;
 
 /**
- *
- * @author Marcus Krassmann
+ * Type-safe returning ladders.
  */
 public interface LadderDao extends AbstractDao<Ladder> {
 

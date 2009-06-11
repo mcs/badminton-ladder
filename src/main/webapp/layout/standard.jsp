@@ -8,24 +8,20 @@
             <title>Badminton-Ladder - ${title}</title>
             <link rel="stylesheet"
                   type="text/css"
-                  href="${pageContext.request.contextPath}/ladder.css"/>
+                  href="${pageContext.request.contextPath}/style.css"/>
         </head>
         <body>
             <div id="root">
                 <div id="kopf">
                     <%@ include file="/layout/header.jsp" %>
                 </div>
-                
-                <div id="links">
-                    <%@ include file="/layout/globalnavigation.jsp" %>
-                </div>
-                
+
                 <div id="inhalt">
                     <s:messages/><s:errors/>
                     <s:layout-component name="contents"/>
                 </div>
-                
-                <div id="fuss">
+
+                <div id="footer">
                     &copy; 2009 Marcus Kra&szlig;mann
                 </div>
             </div>
