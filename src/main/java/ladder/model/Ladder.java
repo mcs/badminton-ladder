@@ -21,7 +21,7 @@ public class Ladder extends AbstractEntity {
         this.name = name;
     }
 
-    @OneToMany(targetEntity=ladder.model.Player.class, mappedBy = "ladder")
+    @OneToMany(mappedBy = "ladder")
     public List<Player> getPlayers() {
         return players;
     }

@@ -20,19 +20,14 @@ public class BadmintonTestFixture extends AbstractTransactionalJUnit4SpringConte
 
     @Before
     public void ladderSetUp() {
-        Ladder ladder = new Ladder();
-        ladderDao.persist(ladder);
-        System.out.println("Ladder-Id = " + ladder.getId());
-        System.out.println("*** Before loop...");
+        Ladder ladder = ladderDao.findAll().get(0);
         for (int i = 0; i < 10; i++) {
             Player p = new Player();
             p.setName(PLAYER_PREFIX + (i + 1));
             p.setLadder(ladder);
+            // following line is sadly needed in test environment :-(
             ladder.add(p);
             playerDao.persist(p);
-            System.out.printf("*** Player %s persisted! Player is in ladder %s\n", p.getId(), p.getLadder());
         }
-        System.out.println("*** After loop!");
-        System.out.println("Ladder is " + ladder);
     }
 }
