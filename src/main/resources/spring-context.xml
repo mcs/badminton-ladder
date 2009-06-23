@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:hades="http://schemas.synyx.org/hades"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+            http://schemas.synyx.org/hades http://schemas.synyx.org/hades/hades.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
     <!-- import properties -->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -41,7 +43,11 @@
         </property>
     </bean>
 
-    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+    <!-- inject EntityManager at @PersistenceContext -->
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+
+    <!-- wrap JPA exceptions in Spring's DataAccessException -->
+    <bean class="org.springframework.dao.support.PersistenceExceptionTranslationInterceptor"/>
 
     <!-- Transaction Manager -->
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
@@ -49,16 +55,10 @@
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
     
-
     <!-- Data Access Objects -->
-    <bean id="genericDAO" class="ladder.dao.AbstractDaoImpl" abstract="true">
-        <property name="entityManagerFactory" ref="entityManagerFactory"/>
-    </bean>
+    <hades:dao-config base-package="ladder.dao"/>
 
-    <bean id="playerDao" class="ladder.dao.PlayerDaoImpl" parent="genericDAO"/>
-    <bean id="ladderDao" class="ladder.dao.LadderDaoImpl" parent="genericDAO"/>
-    
     <!-- Services -->
-    <bean id="ladderService" class="ladder.service.LadderServiceImpl"/>
-    
+    <bean id="ladderService" class="ladder.service.PyramidLadderService"/>
+
 </beans>

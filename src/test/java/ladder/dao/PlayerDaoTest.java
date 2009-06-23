@@ -16,7 +16,7 @@ public class PlayerDaoTest extends BadmintonTestFixture {
 
     @Test
     public void allPersistedFromFixture() {
-        List<Player> players = playerDao.findAll();
+        List<Player> players = playerDao.readAll();
         assertThat(players.size(), is(10));
         for (Player p : players) {
             assertThat(p.getId(), is(notNullValue()));
@@ -26,13 +26,14 @@ public class PlayerDaoTest extends BadmintonTestFixture {
     @Test
     public void nameExists() {
         System.out.println("findByName");
-        Player result = playerDao.findByName(PLAYER_PREFIX + "1");
-        assertThat(result, is(notNullValue()));
+        Player p = playerDao.findByName(PLAYER_PREFIX + "1");
+        assertThat(p, is(notNullValue()));
     }
 
-    @Test(expected = NoResultException.class)
+    @Test
     public void nameDoesNotExist() {
         System.out.println("findByName");
-        playerDao.findByName(PLAYER_PREFIX + "NO_NO_NO");
+        Player p = playerDao.findByName(PLAYER_PREFIX + "NO_NO_NO");
+        assertThat(p, is(nullValue()));
     }
 }

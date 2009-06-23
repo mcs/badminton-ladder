@@ -2,7 +2,6 @@
 package ladder.model;
 
 import ladder.BadmintonTestFixture;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -16,12 +15,8 @@ public class LadderTest extends BadmintonTestFixture {
     }
 
     @Before
-    public void setUp() {
-        ladder = ladderDao.findAll().get(0);
-    }
-
-    @After
-    public void tearDown() {
+    public void init() {
+        ladder = ladderDao.readAll().get(0);
     }
 
     @Test

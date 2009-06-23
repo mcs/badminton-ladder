@@ -1,13 +1,10 @@
 package ladder.service;
 
-import ladder.model.Ladder;
 import ladder.model.Player;
 
-/**
- *
- * @author Marcus Krassmann
- */
 public interface LadderService {
 
-    void rankPlayer(Ladder ladder, Player p, int newRank);
+    void enterMatchResult(Player winner, Player loser);
+
+    public boolean isChallengeAllowed(Player player1, Player player2);
 }

@@ -4,13 +4,12 @@
 <s:layout-render name="/layout/standard.jsp" title="DAR-Ladder">
     <s:layout-component name="contents">
 
-        Rangliste:
+        Aktuelle Rangliste:
         <table border="1px">
             <thead>
             <tr>
                 <th>Rang</th>
                 <th>Spieler</th>
-                <th>zuletzt gespielt</th>
             </tr>
             </thead>
             <tbody>
@@ -18,11 +17,13 @@
                     <tr>
                         <td><c:out value="${i.count}"/></td>
                         <td><c:out value="${player.name}"/></td>
-                        <td><c:out value="${player.updated}"/></td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
-        
+
+        <s:link beanclass="ladder.action.admin.MatchActionBean">
+            Match eintragen...
+        </s:link>
     </s:layout-component>
 </s:layout-render>

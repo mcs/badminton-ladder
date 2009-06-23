@@ -20,7 +20,7 @@
     </table>
     <div id="navLinks">
     <s:link beanclass="ladder.action.IndexActionBean">Startseite</s:link>
-    <s:link beanclass="ladder.action.ShowLadderActionBean">Rangliste</s:link>
+    <s:link beanclass="ladder.action.LadderActionBean">Rangliste</s:link>
     &nbsp;
     <a href="http://www.mtv-pattensen.de/">MTV Pattensen</a>
         <c:if test="${not empty user}">
