@@ -1,22 +1,19 @@
 package ladder.model;
 
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import org.synyx.hades.domain.support.AbstractPersistable;
 
 @Entity
-public class Role extends AbstractEntity {
+public class Right extends AbstractPersistable<Long> {
 
     @Column(unique = true)
     private String name;
-    @ManyToMany
-    private Set<Right> rights;
 
-    public Role() {
+    public Right() {
     }
 
-    public Role(String name) {
+    public Right(String name) {
         this.name = name;
     }
 
@@ -28,23 +25,15 @@ public class Role extends AbstractEntity {
         this.name = name;
     }
 
-    public Set<Right> getRights() {
-        return rights;
-    }
-
-    public void setRights(Set<Right> rights) {
-        this.rights = rights;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
         }
-        if (!(obj instanceof Role)) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        final Role other = (Role) obj;
+        final Right other = (Right) obj;
         if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
             return false;
         }
@@ -53,17 +42,8 @@ public class Role extends AbstractEntity {
 
     @Override
     public int hashCode() {
-        return name == null ? 0 : name.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + ", Rolename: " + name;
-    }
-
-
-
-    public boolean hasRight(Right right) {
-        return rights.contains(right);
+        int hash = 5;
+        hash = 71 * hash + (this.name != null ? this.name.hashCode() : 0);
+        return hash;
     }
 }

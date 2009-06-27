@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiJARLocking="true" path="/ladder">
-  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/badmintonDS" password="" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/badminton?autoReconnect=true" username="badminton"/>
+    <Resource
+        auth="Container"
+        name="jdbc/badmintonDS" 
+        type="javax.sql.DataSource" 
+        driverClassName="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://localhost:3306/badminton?autoReconnect=true" 
+        username="badminton"
+        password=""
+        maxActive="100"
+        maxIdle="30"
+        maxWait="10000"
+    />
 </Context>

@@ -62,7 +62,7 @@ public class PyramidLadderService implements LadderService {
             int rowChallenger = PyramidUtil.getRowForRank(rankChallenger);
             return rankChallenger - rowChallenger < rankChallenged;
         } catch (IllegalArgumentException e) {
-            log.warn(null, e);
+            log.warn("Player not in ladder", e);
             return false;
         }
     }

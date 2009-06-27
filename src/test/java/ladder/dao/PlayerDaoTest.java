@@ -2,7 +2,6 @@
 package ladder.dao;
 
 import java.util.List;
-import javax.persistence.NoResultException;
 import ladder.BadmintonTestFixture;
 import ladder.model.Player;
 import org.junit.Test;

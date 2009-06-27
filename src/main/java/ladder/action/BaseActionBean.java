@@ -10,6 +10,8 @@ import net.sourceforge.stripes.action.ActionBeanContext;
  */
 public class BaseActionBean implements ActionBean {
 
+    public static final String BASE_PATH = "/WEB-XML/jsp";
+
     private BadmintonActionBeanContext ctx;
 
     @Override

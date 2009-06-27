@@ -8,6 +8,6 @@ public class IndexActionBean extends BaseActionBean {
 
     @DefaultHandler
     public Resolution index() {
-        return new ForwardResolution("/index.jsp");
+        return new ForwardResolution(BASE_PATH + "/index.jsp");
     }
 }

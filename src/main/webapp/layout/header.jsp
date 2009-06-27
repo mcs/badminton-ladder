@@ -4,16 +4,14 @@
 <div id="imageHeader">
     <table style="padding: 5px; margin: 0px; width: 100%;">
         <tr>
-            <td id="pageHeader">otr java mirror</td>
+            <td id="pageHeader">Badminton Liga</td>
             <td id="loginInfo">
                 <c:if test="${not empty user}">
                     Welcome, ${user.login}
                     |
-<%--
-                    <s:link beanclass="otr.mirror.web.action.LogoutActionBean">
+                    <s:link beanclass="ladder.action.LogoutActionBean">
                         <fmt:message key="site.logout"/>
                     </s:link>
---%>
                 </c:if>
             </td>
         </tr>
@@ -24,7 +22,7 @@
     &nbsp;
     <a href="http://www.mtv-pattensen.de/">MTV Pattensen</a>
         <c:if test="${not empty user}">
-            <s:link beanclass="otr.mirror.web.action.admin.SettingsActionBean">
+            <s:link beanclass="ladder.action.admin.SettingsActionBean">
                 <fmt:message key="site.admin_settings"/>
             </s:link>
         </c:if>

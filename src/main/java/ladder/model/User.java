@@ -58,4 +58,10 @@ public class User extends AbstractEntity {
     public int hashCode() {
         return this.login == null ? 0 : this.login.hashCode();
     }
+
+    /* ********************************************************************** */
+
+    public boolean hasRight(Right right) {
+        return role.hasRight(right);
+    }
 }
