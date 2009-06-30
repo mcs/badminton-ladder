@@ -16,8 +16,14 @@ public class UserServiceTest extends BadmintonTestFixture {
     @Mock
     private UserDao userDao;
     private UserServiceImpl instance;
+    private final String login = "test_01";
+    private final String password = "test_pass";
+    private User user;
 
     public UserServiceTest() {
+        user = new User();
+        user.setLogin(login);
+        user.setPassword(Password.createNewPassword(password));
     }
 
     @Before
@@ -26,48 +32,27 @@ public class UserServiceTest extends BadmintonTestFixture {
         instance.setUserDao(userDao);
     }
 
+    @Before
+    public void initUserDao() {
+        when(userDao.findByLogin(login)).thenReturn(user);
+    }
+
+    
     @Test
     public void testLogin() {
-        String username = "test_01";
-        String password = "test_pass";
-
-        User user = new User();
-        user.setLogin(username);
-        user.setPassword(Password.createNewPassword(password));
-
-        when(userDao.findByLogin(username)).thenReturn(user);
-
-        User result = instance.login(username, password);
+        User result = instance.login(login, password);
         assertThat(result, is(user));
     }
 
     @Test
     public void testLoginWrongUser() {
-        String username = "test_01";
-        String password = "test_pass";
-
-        User user = new User();
-        user.setLogin(username);
-        user.setPassword(Password.createNewPassword(password));
-
-        when(userDao.findByLogin(username)).thenReturn(user);
-
         User result = instance.login("wrong", password);
         assertThat(result, is(not(user)));
     }
 
     @Test
     public void testLoginWrongPassword() {
-        String username = "test_01";
-        String password = "test_pass";
-
-        User user = new User();
-        user.setLogin(username);
-        user.setPassword(Password.createNewPassword(password));
-
-        when(userDao.findByLogin(username)).thenReturn(user);
-
-        User result = instance.login(username, "wrong");
+        User result = instance.login(login, "wrong");
         assertThat(result, is(not(user)));
     }
 }
