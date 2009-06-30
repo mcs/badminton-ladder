@@ -14,6 +14,9 @@ public class Player extends AbstractEntity {
     @JoinColumn(name = "ladder_id", insertable = false, updatable = false, nullable = false)
     private Ladder ladder;
 
+    public Player() {
+    }
+
     public String getName() {
         return name;
     }

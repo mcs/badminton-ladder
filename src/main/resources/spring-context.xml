@@ -60,5 +60,6 @@
 
     <!-- Services -->
     <bean id="ladderService" class="ladder.service.PyramidLadderService"/>
+    <bean id="userService" class="ladder.service.UserServiceImpl"/>
 
 </beans>

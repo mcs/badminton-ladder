@@ -17,7 +17,7 @@ public class LadderDaoTest extends BadmintonTestFixture {
     public void testPersistedLadder() {
         Ladder ladder = ladderDao.readAll().get(0);
         System.out.println(ladder);
-        assertThat(ladder.size(), is(10));
+        assertThat(ladder.size(), is(16));
         for (Player p : ladder.getPlayers()) {
             assertThat(p.getId(), is(notNullValue()));
         }

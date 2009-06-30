@@ -57,7 +57,7 @@ public class MatchActionBean extends BaseActionBean {
     @DefaultHandler
     @DontValidate
     public Resolution showEnterMatchView() {
-        return new ForwardResolution("/admin/enter_result.jsp");
+        return new ForwardResolution(BASE_PATH + "/admin/enter_result.jsp");
     }
 
     @Before(on = "setResult", stages = LifecycleStage.CustomValidation)

@@ -16,6 +16,9 @@ public class Ladder extends AbstractEntity {
     @JoinColumn(name = "ladder_id", nullable = false)
     private List<Player> players = new ArrayList<Player>();
 
+    public Ladder() {
+    }
+
     /* Entity methods */
 
     public String getName() {

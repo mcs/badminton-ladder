@@ -25,9 +25,12 @@ public class BadmintonTestFixture extends AbstractJpaTests {
     protected PlayerDao playerDao;
 
     @Before
-    public void ladderSetUp() {
+    public void initMocks() {
         MockitoAnnotations.initMocks(this);
+    }
 
+    @Before
+    public void ladderSetUp() {
         Ladder ladder = ladderDao.readAll().get(0);
         for (int i = 0; i < 10; i++) {
             Player p = new Player();

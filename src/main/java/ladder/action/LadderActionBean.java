@@ -32,12 +32,12 @@ public class LadderActionBean extends BaseActionBean {
     }
 
     @Before
-    public void populateAndCheckForLadder() {
+    public void populateLadder() {
         ladder = ladderDao.readAll().get(0);
     }
 
     @DefaultHandler
     public Resolution showLadders() {
-        return new ForwardResolution("/ladder.jsp");
+        return new ForwardResolution(BASE_PATH + "/ladder.jsp");
     }
 }

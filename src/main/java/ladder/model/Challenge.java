@@ -11,6 +11,9 @@ public class Challenge extends AbstractEntity {
     @ManyToOne
     private Player challenged;
 
+    public Challenge() {
+    }
+
     public Player getChallenger() {
         return challenger;
     }

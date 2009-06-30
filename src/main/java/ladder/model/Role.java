@@ -11,7 +11,7 @@ public class Role extends AbstractEntity {
     @Column(unique = true)
     private String name;
     @ManyToMany
-    private Set<Right> rights;
+    private Set<Access> access;
 
     public Role() {
     }
@@ -28,12 +28,12 @@ public class Role extends AbstractEntity {
         this.name = name;
     }
 
-    public Set<Right> getRights() {
-        return rights;
+    public Set<Access> getAccess() {
+        return access;
     }
 
-    public void setRights(Set<Right> rights) {
-        this.rights = rights;
+    public void setAccess(Set<Access> access) {
+        this.access = access;
     }
 
     @Override
@@ -63,7 +63,7 @@ public class Role extends AbstractEntity {
 
 
 
-    public boolean hasRight(Right right) {
-        return rights.contains(right);
+    public boolean hasRight(Access right) {
+        return access.contains(right);
     }
 }

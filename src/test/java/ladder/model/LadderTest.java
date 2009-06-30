@@ -22,7 +22,7 @@ public class LadderTest extends BadmintonTestFixture {
     @Test
     public void testSize() {
         System.out.println("size");
-        assertThat(ladder.size(), is(10));
+        assertThat(ladder.size(), is(16));
     }
 
     @Test
@@ -47,7 +47,7 @@ public class LadderTest extends BadmintonTestFixture {
         System.out.println("add");
         Player player = new Player();
         ladder.add(player);
-        assertThat(ladder.size(), is(11));
+        assertThat(ladder.size(), is(17));
         assertThat(ladder.getPlayers().contains(player), is(true));
     }
 
@@ -57,6 +57,6 @@ public class LadderTest extends BadmintonTestFixture {
         Player player = ladder.getPlayers().get(0);
         ladder.remove(player);
         assertThat(ladder.getPlayers().contains(player), is(false));
-        assertThat(ladder.size(), is(9));
+        assertThat(ladder.size(), is(15));
     }
 }

@@ -1,6 +1,7 @@
 package ladder.model;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -8,10 +9,10 @@ import javax.persistence.ManyToOne;
 @Entity
 public class User extends AbstractEntity {
 
-
     @Column(unique = true)
     private String login;
-    private String password;
+    @Embedded
+    private Password password;
     @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
 
@@ -23,11 +24,11 @@ public class User extends AbstractEntity {
         this.login = login;
     }
 
-    public String getPassword() {
+    public Password getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(Password password) {
         this.password = password;
     }
 
@@ -61,7 +62,7 @@ public class User extends AbstractEntity {
 
     /* ********************************************************************** */
 
-    public boolean hasRight(Right right) {
+    public boolean hasRight(Access right) {
         return role.hasRight(right);
     }
 }
