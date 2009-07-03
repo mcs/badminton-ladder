@@ -7,7 +7,7 @@
             <td id="pageHeader">Badminton Liga</td>
             <td id="loginInfo">
                 <c:if test="${not empty user}">
-                    Welcome, ${user.login}
+                    ${user.login}
                     |
                     <s:link beanclass="ladder.action.LogoutActionBean">
                         <fmt:message key="site.logout"/>
@@ -17,14 +17,12 @@
         </tr>
     </table>
     <div id="navLinks">
-    <s:link beanclass="ladder.action.IndexActionBean">Startseite</s:link>
-    <s:link beanclass="ladder.action.LadderActionBean">Rangliste</s:link>
-    &nbsp;
-    <a href="http://www.mtv-pattensen.de/">MTV Pattensen</a>
-        <c:if test="${not empty user}">
-            <s:link beanclass="ladder.action.admin.SettingsActionBean">
-                <fmt:message key="site.admin_settings"/>
-            </s:link>
+        <s:link beanclass="ladder.action.IndexActionBean">Startseite</s:link>
+        <c:if test="${empty user}">
+            <s:link beanclass="ladder.action.LoginActionBean">Anmelden</s:link>
         </c:if>
+        <s:link beanclass="ladder.action.LadderActionBean">Rangliste</s:link>
+        &nbsp;
+        <a href="http://www.mtv-pattensen.de/">MTV Pattensen</a>
     </div>
 </div>

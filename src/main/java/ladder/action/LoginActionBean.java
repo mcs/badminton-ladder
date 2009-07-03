@@ -17,7 +17,7 @@ import net.sourceforge.stripes.validation.ValidationMethod;
 public class LoginActionBean extends BaseActionBean {
 
     @Validate(required = true)
-    public String login, password;
+    public String username, password;
 
     @SpringBean
     private UserService userService;
@@ -31,7 +31,7 @@ public class LoginActionBean extends BaseActionBean {
 
     @ValidationMethod(on = "login")
     public void tryLogin(ValidationErrors errors) {
-        user = userService.login(login, password);
+        user = userService.login(username, password);
         if (user == null) {
             errors.addGlobalError(new SimpleError("Login nicht gültig"));
         }

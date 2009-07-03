@@ -17,28 +17,56 @@ public class Password implements Serializable {
 
     private String password;
     private String salt;
-    
+
+    /**
+     * Creates a hashed password for a given plain text password and salt.
+     * @param password the plain text password. If <tt>null</tt>, a random one is generated
+     * @param salt the salt. If <tt>null</tt>, the password will be stored without hashing it.
+     * @return a new password instance with the hashed password
+     */
     public static Password createPassword(String password, String salt) {
-        String toHash = password + salt;
-        String hash = DigestUtils.md5Hex(toHash);
+        LOG.debug("Entered password: " + password);
+        if (password == null) {
+            password = generateRandomBase64String(8);
+            LOG.debug("Generated random password: " + password);
+        }
+        String hash;
+        if (salt == null) {
+            // store plain text password (needed for e.g. maintenance)
+            hash = password;
+        } else {
+            // use salt to create a hashed password
+            hash = DigestUtils.md5Hex(password + salt);
+        }
         LOG.debug("Calculated hash: " + hash);
         return new Password(hash, salt);
     }
 
+    /**
+     * Creates a new password together with a new random salt.
+     * @param password the plain text password. If <tt>null</tt>, a random one is generated.
+     * @return the hashed password, based on a randomly generated salt
+     */
     public static Password createNewPassword(String password) {
-        byte[] bytes = new byte[8];
-        RND.nextBytes(bytes);
-        bytes = Base64.encodeBase64(bytes);
-        String salt = new String(bytes, Charset.forName("UTF-8")).substring(0, 9);
+        // create salt with nine characters
+        String salt = generateRandomBase64String(9);
         LOG.debug("Generated salt: " + salt);
         return createPassword(password, salt);
     }
 
-    public Password() {
+    private static String generateRandomBase64String(int size) {
+        byte[] bytes = new byte[size];
+        RND.nextBytes(bytes);
+        bytes = Base64.encodeBase64(bytes);
+        return new String(bytes, Charset.forName("UTF-8")).substring(0, size);
     }
 
-    public Password(String password, String salt) {
-        this.password = password;
+    protected Password() {
+        // used by hibernate
+    }
+
+    private Password(String hashedPassword, String salt) {
+        this.password = hashedPassword;
         this.salt = salt;
     }
 
@@ -48,10 +76,6 @@ public class Password implements Serializable {
 
     public String getSalt() {
         return salt;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     @Override
@@ -66,13 +90,18 @@ public class Password implements Serializable {
         if ((this.password == null) ? (other.password != null) : !this.password.equals(other.password)) {
             return false;
         }
+        if ((this.salt == null) ? (other.salt != null) : !this.salt.equals(other.salt)) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 29 * hash + (this.password != null ? this.password.hashCode() : 0);
+        hash = 59 * hash + (this.password != null ? this.password.hashCode() : 0);
+        hash = 59 * hash + (this.salt != null ? this.salt.hashCode() : 0);
         return hash;
     }
+
 }

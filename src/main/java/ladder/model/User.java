@@ -13,6 +13,7 @@ public class User extends AbstractEntity {
     private String login;
     @Embedded
     private Password password;
+    private String email;
     @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
 
@@ -30,6 +31,14 @@ public class User extends AbstractEntity {
 
     public void setPassword(Password password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Role getRole() {
@@ -65,4 +74,5 @@ public class User extends AbstractEntity {
     public boolean hasRight(Access right) {
         return role.hasRight(right);
     }
+
 }

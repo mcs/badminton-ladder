@@ -6,6 +6,7 @@ import ladder.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private UserDao userDao;
@@ -26,5 +27,23 @@ public class UserServiceImpl implements UserService {
             }
         }
         return null;
+    }
+
+    @Override
+    public boolean isUsernameFree(String username) {
+        return userDao.findByLogin(username) == null;
+    }
+
+    @Override
+    public User register(String username, String password, String email) {
+        if (!isUsernameFree(username)) {
+            throw new IllegalArgumentException("User already taken");
+        }
+        
+        User u = new User();
+        u.setLogin(username);
+        u.setPassword(Password.createNewPassword(password));
+        u.setEmail(email);
+        return userDao.save(u);
     }
 }
