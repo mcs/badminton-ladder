@@ -1,6 +1,8 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ include file="/taglibs.jsp" %>
 
+<s:useActionBean var="matchActionBean" beanclass="ladder.action.admin.MatchActionBean"/>
+
 <s:layout-render name="/layout/standard.jsp" title="DAR-Ladder">
     <s:layout-component name="contents">
 
@@ -21,9 +23,10 @@
                 </c:forEach>
             </tbody>
         </table>
-
-        <s:link beanclass="ladder.action.admin.MatchActionBean">
-            Match eintragen...
-        </s:link>
+        <sec:allowed bean="matchActionBean">
+            <s:link beanclass="${matchActionBean.class}">
+                Match eintragen...
+            </s:link>
+        </sec:allowed>
     </s:layout-component>
 </s:layout-render>

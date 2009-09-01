@@ -1,17 +1,13 @@
 package ladder.model;
 
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 
 @Entity
 public class Role extends AbstractEntity {
 
     @Column(unique = true)
-    private String name;
-    @ManyToMany
-    private Set<Access> access;
+    private String name = "";
 
     public Role() {
     }
@@ -26,14 +22,6 @@ public class Role extends AbstractEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<Access> getAccess() {
-        return access;
-    }
-
-    public void setAccess(Set<Access> access) {
-        this.access = access;
     }
 
     @Override
@@ -53,17 +41,12 @@ public class Role extends AbstractEntity {
 
     @Override
     public int hashCode() {
-        return name == null ? 0 : name.hashCode();
+        return name.hashCode();
     }
 
     @Override
     public String toString() {
-        return super.toString() + ", Rolename: " + name;
+        return String.format("Role: '%s'", name);
     }
 
-
-
-    public boolean hasRight(Access right) {
-        return access.contains(right);
-    }
 }

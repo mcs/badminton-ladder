@@ -28,6 +28,12 @@
             <version>1.5.1</version>
         </dependency>
         <dependency>
+            <!-- plugin for stripes with nice features, especially security -->
+            <groupId>org.stripesstuff</groupId>
+            <artifactId>stripesstuff</artifactId>
+            <version>0.2</version>
+        </dependency>
+        <dependency>
             <!-- allows file upload for Stripes -->
             <groupId>com.servlets</groupId>
             <artifactId>cos</artifactId>
@@ -275,5 +281,6 @@
         <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
     </properties>
 </project>
+
 
 
