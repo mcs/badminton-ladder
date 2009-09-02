@@ -26,6 +26,7 @@ public class LadderDaoTest extends BadmintonTestFixture {
     @Test
     public void testOneToManyRelation() {
         Ladder ladder = new Ladder();
+        ladder.setName("TempName");
         assertThat(ladder.getId(), is(nullValue()));
         ladderDao.save(ladder);
         assertThat(ladder.getId(), is(notNullValue()));

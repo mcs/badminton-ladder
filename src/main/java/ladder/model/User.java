@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class User extends AbstractEntity {
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String login;
     @Embedded
     private Password password;
@@ -70,9 +70,7 @@ public class User extends AbstractEntity {
     }
 
     /* ********************************************************************** */
-
-    public boolean hasRight(Access right) {
+    public boolean hasRight(Right right) {
         return role.hasRight(right);
     }
-
 }

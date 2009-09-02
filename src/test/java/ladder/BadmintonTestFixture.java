@@ -1,5 +1,7 @@
 package ladder;
 
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
 import ladder.dao.LadderDao;
 import ladder.dao.PlayerDao;
 import ladder.model.Ladder;
@@ -32,11 +34,10 @@ public class BadmintonTestFixture extends AbstractJpaTests {
     @Before
     public void ladderSetUp() {
         Ladder ladder = ladderDao.readAll().get(0);
+        assertThat(ladder.size(), is(6));
         for (int i = 0; i < 10; i++) {
             Player p = new Player();
             p.setName(PLAYER_PREFIX + (i + 1));
-            p.setLadder(ladder);
-            // following line is sadly needed in test environment :-(
             ladder.add(p);
             playerDao.save(p);
         }

@@ -11,7 +11,6 @@ public class Player extends AbstractEntity {
     @Column(unique = true)
     private String name;
     @ManyToOne
-    @JoinColumn(name = "ladder_id", insertable = false, updatable = false, nullable = false)
     private Ladder ladder;
 
     public Player() {

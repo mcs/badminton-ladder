@@ -2,25 +2,24 @@ package ladder.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import org.hibernate.annotations.IndexColumn;
 
 @Entity
 public class Ladder extends AbstractEntity {
 
-    private String name = "";
-    @OneToMany
+    @Column(nullable = false)
+    private String name;
+    @OneToMany(mappedBy = "ladder")
     @IndexColumn(name = "player_rank")
-    @JoinColumn(name = "ladder_id", nullable = false)
     private List<Player> players = new ArrayList<Player>();
 
     public Ladder() {
     }
 
     /* Entity methods */
-
     public String getName() {
         return name;
     }
@@ -38,7 +37,6 @@ public class Ladder extends AbstractEntity {
     }
 
     /* Domain methods */
-    
     public int size() {
         return players.size();
     }
@@ -69,6 +67,7 @@ public class Ladder extends AbstractEntity {
             throw new IllegalArgumentException(player + " already in ladder!");
         }
         players.add(player);
+        player.setLadder(this);
     }
 
     public void remove(Player player) {
@@ -76,6 +75,7 @@ public class Ladder extends AbstractEntity {
             throw new IllegalArgumentException(player + " not in ladder!");
         }
         players.remove(player);
+        player.setLadder(null);
     }
 
     @Override

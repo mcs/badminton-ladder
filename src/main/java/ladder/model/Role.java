@@ -1,13 +1,17 @@
 package ladder.model;
 
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Role extends AbstractEntity {
 
-    @Column(unique = true)
-    private String name = "";
+    @Column(unique = true, nullable = false)
+    private String name;
+    @ManyToMany
+    private Set<Right> rights;
 
     public Role() {
     }
@@ -22,6 +26,18 @@ public class Role extends AbstractEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Right> getRights() {
+        return rights;
+    }
+
+    public void setRights(Set<Right> rights) {
+        this.rights = rights;
+    }
+
+    public boolean hasRight(Right right) {
+        return rights.contains(right);
     }
 
     @Override

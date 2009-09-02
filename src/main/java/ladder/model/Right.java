@@ -5,15 +5,15 @@ import javax.persistence.Entity;
 import org.synyx.hades.domain.support.AbstractPersistable;
 
 @Entity
-public class Access extends AbstractPersistable<Long> {
+public class Right extends AbstractPersistable<Long> {
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String name;
 
-    public Access() {
+    public Right() {
     }
 
-    public Access(String name) {
+    public Right(String name) {
         this.name = name;
     }
 
@@ -33,7 +33,7 @@ public class Access extends AbstractPersistable<Long> {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Access other = (Access) obj;
+        final Right other = (Right) obj;
         if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
             return false;
         }
@@ -42,8 +42,6 @@ public class Access extends AbstractPersistable<Long> {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 71 * hash + (this.name != null ? this.name.hashCode() : 0);
-        return hash;
+        return name.hashCode();
     }
 }
