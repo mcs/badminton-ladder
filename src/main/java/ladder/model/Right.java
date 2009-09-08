@@ -2,19 +2,27 @@ package ladder.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import org.synyx.hades.domain.support.AbstractPersistable;
 
 @Entity
+@Table(name = "tRight")
 public class Right extends AbstractPersistable<Long> {
 
     @Column(unique = true, nullable = false)
     private String name;
+    private String description;
 
     public Right() {
     }
 
     public Right(String name) {
+        this(name, null);
+    }
+
+    public Right(String name, String description) {
         this.name = name;
+        this.description = description;
     }
 
     public String getName() {
@@ -23,6 +31,14 @@ public class Right extends AbstractPersistable<Long> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

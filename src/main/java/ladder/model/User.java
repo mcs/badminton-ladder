@@ -5,8 +5,10 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tUser")
 public class User extends AbstractEntity {
 
     @Column(unique = true, nullable = false)

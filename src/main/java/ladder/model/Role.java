@@ -3,14 +3,20 @@ package ladder.model;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tRole")
 public class Role extends AbstractEntity {
 
     @Column(unique = true, nullable = false)
     private String name;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "tRole_right", joinColumns=@JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "right_id"))
     private Set<Right> rights;
 
     public Role() {

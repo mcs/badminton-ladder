@@ -1,4 +1,3 @@
-
 package ladder.dao;
 
 import java.util.List;

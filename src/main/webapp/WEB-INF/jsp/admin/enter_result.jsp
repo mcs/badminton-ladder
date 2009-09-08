@@ -5,7 +5,6 @@
     <s:layout-component name="contents">
 
         <s:form beanclass="ladder.action.admin.MatchActionBean">
-            <s:hidden name="ladder.players"/>
             <table>
                 <tr>
                     <td>Gewinner:</td>

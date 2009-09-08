@@ -21,6 +21,8 @@ public class PyramidLadderServiceTest extends BadmintonTestFixture {
         Ladder ladder = ladderDao.readAll().get(0);
         Player winner = ladder.getPlayer(3);
         Player loser = ladder.getPlayer(2);
+        assertThat(ladder.getRank(winner), is(3));
+        assertThat(ladder.getRank(loser), is(2));
         ladderService.enterMatchResult(winner, loser);
         assertThat(ladder.getRank(winner), is(2));
         assertThat(ladder.getRank(loser), is(3));

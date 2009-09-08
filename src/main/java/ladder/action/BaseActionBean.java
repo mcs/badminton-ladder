@@ -23,4 +23,12 @@ public class BaseActionBean implements ActionBean {
     public BadmintonActionBeanContext getContext() {
         return ctx;
     }
+
+    public String getLastUrl() {
+        String lastUrl = getContext().getSourcePage();
+        if (lastUrl == null) {
+            lastUrl = getContext().getRequest().getRequestURL().toString();
+        }
+        return lastUrl;
+    }
 }

@@ -2,17 +2,22 @@ package ladder.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import org.hibernate.annotations.IndexColumn;
 
 @Entity
+@Table(name = "tLadder")
 public class Ladder extends AbstractEntity {
 
     @Column(nullable = false)
     private String name;
-    @OneToMany(mappedBy = "ladder")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ladder_id")
     @IndexColumn(name = "player_rank")
     private List<Player> players = new ArrayList<Player>();
 
@@ -57,7 +62,7 @@ public class Ladder extends AbstractEntity {
 
     public void setRank(Player p, int newRank) {
         if (players.contains(p)) {
-            this.remove(p);
+            players.remove(p);
         }
         players.add(newRank - 1, p);
     }

@@ -12,29 +12,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class PyramidLadderService implements LadderService {
 
     private static final Log log = LogFactory.getLog(PyramidLadderService.class);
+    @Autowired
     private LadderDao ladderDao;
+    @Autowired
     private PlayerDao playerDao;
 
-    @Autowired
-    public void setLadderDao(LadderDao ladderDao) {
-        this.ladderDao = ladderDao;
-    }
-
-    @Autowired
-    public void setPlayerDao(PlayerDao playerDao) {
-        this.playerDao = playerDao;
-    }
-
     @Override
-    @Transactional
     public void enterMatchResult(Player winner, Player loser) {
         // init
         Ladder ladder = ladderDao.readAll().get(0);
-        winner = playerDao.readByPrimaryKey(winner.getId());
-        loser = playerDao.readByPrimaryKey(loser.getId());
 
         // logic
         int rankLoser = ladder.getRank(loser);

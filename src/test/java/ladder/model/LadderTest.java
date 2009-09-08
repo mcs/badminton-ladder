@@ -40,6 +40,7 @@ public class LadderTest extends BadmintonTestFixture {
         int newRank = 3;
         ladder.setRank(p, newRank);
         assertThat(ladder.getRank(p), is(3));
+        assertThat(ladder.size(), is(16));
     }
 
     @Test

@@ -2,17 +2,14 @@ package ladder.model;
 
 import java.io.Serializable;
 import javax.persistence.MappedSuperclass;
-import org.synyx.hades.domain.support.AbstractAuditable;
+import org.synyx.hades.domain.support.AbstractPersistable;
 
-/**
- * Abstract auditable superclass defining some standard fields for entities.
- * @author Marcus Krassmann
- */
 @MappedSuperclass
-public class AbstractEntity extends AbstractAuditable<User, Long> implements Serializable {
+public abstract class AbstractEntity extends AbstractPersistable<Long> implements Serializable  {
 
     @Override
     public String toString() {
         return "Id: " + getId();
     }
+
 }

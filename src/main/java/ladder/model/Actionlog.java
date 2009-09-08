@@ -1,8 +1,10 @@
 package ladder.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tActionLog")
 public class Actionlog extends AbstractEntity {
 
     private String description;
