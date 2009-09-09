@@ -4,7 +4,7 @@ import ladder.model.Player;
 
 public interface LadderService {
 
-    void enterMatchResult(Player winner, Player loser);
+    void enterMatchResult(long winner_id, long loser_id);
 
-    public boolean isChallengeAllowed(Player player1, Player player2);
+    public boolean isChallengeAllowed(long player1_id, long player2_id);
 }

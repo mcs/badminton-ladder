@@ -18,7 +18,6 @@ public class LoginActionBean extends BaseActionBean {
 
     @Validate(required = true)
     public String username, password;
-
     @SpringBean
     private UserService userService;
     private User user;
@@ -31,15 +30,18 @@ public class LoginActionBean extends BaseActionBean {
 
     @ValidationMethod(on = "login")
     public void tryLogin(ValidationErrors errors) {
-        user = userService.login(username, password);
-        if (user == null) {
-            errors.addGlobalError(new SimpleError("Login nicht gültig"));
-        }
     }
 
     public Resolution login() {
-        getContext().setUser(user);
-        getContext().getMessages().add(new SimpleMessage("Willkommen, {0}", user.getLogin()));
-        return new RedirectResolution(IndexActionBean.class).flash(this);
+        user = userService.login(username, password);
+        if (user != null) {
+            // success
+            getContext().setUser(user);
+            getContext().getMessages().add(new SimpleMessage("Willkommen, {0}", user.getLogin()));
+            return new RedirectResolution(IndexActionBean.class);
+        }
+        // fail
+        getContext().getValidationErrors().addGlobalError(new SimpleError("Der Login ist nicht gültig"));
+        return getContext().getSourcePageResolution();
     }
 }

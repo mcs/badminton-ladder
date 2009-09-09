@@ -14,6 +14,7 @@ import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
+import net.sourceforge.stripes.action.SimpleMessage;
 import net.sourceforge.stripes.action.StrictBinding;
 import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
@@ -72,12 +73,19 @@ public class MatchActionBean extends BaseActionBean {
         }
     }
 
+    @ValidationMethod(on = "setResult")
+    public void checkIfChallengeIsAllowed(ValidationErrors errors) {
+        if (!ladderService.isChallengeAllowed(winner.getId(), loser.getId())
+                && !ladderService.isChallengeAllowed(loser.getId(), winner.getId())) {
+            winner = playerDao.readByPrimaryKey(winner.getId());
+            loser = playerDao.readByPrimaryKey(loser.getId());
+            errors.addGlobalError(new SimpleError("Die Spieler {2} und {3} dürfen aufgrund der Spielregeln nicht gegeneinander spielen.", winner.getName(), loser.getName()));
+        }
+    }
+
     public Resolution setResult() {
-        winner = playerDao.readByPrimaryKey(winner.getId());
-        loser = playerDao.readByPrimaryKey(loser.getId());
-        log.debug("alte Ladder: " + ladder.getPlayers());
-        ladderService.enterMatchResult(winner, loser);
-        log.debug("neue Ladder: " + ladder.getPlayers());
+        ladderService.enterMatchResult(winner.getId(), loser.getId());
+        getContext().getMessages().add(new SimpleMessage("Das Match wurde eingetragen."));
         return new RedirectResolution(LadderActionBean.class);
     }
 }

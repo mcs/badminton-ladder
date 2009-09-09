@@ -22,10 +22,12 @@ public class PyramidLadderService implements LadderService {
     private PlayerDao playerDao;
 
     @Override
-    public void enterMatchResult(Player winner, Player loser) {
+    public void enterMatchResult(long winner_id, long loser_id) {
         // init
         Ladder ladder = ladderDao.readAll().get(0);
-
+        Player winner = playerDao.readByPrimaryKey(winner_id);
+        Player loser = playerDao.readByPrimaryKey(loser_id);
+        
         // logic
         int rankLoser = ladder.getRank(loser);
         int rankWinner = ladder.getRank(winner);
@@ -35,11 +37,11 @@ public class PyramidLadderService implements LadderService {
     }
 
     @Override
-    public boolean isChallengeAllowed(Player challenger, Player challenged) {
+    public boolean isChallengeAllowed(long challenger_id, long challenged_id) {
         // init
         Ladder ladder = ladderDao.readAll().get(0);
-        challenger = playerDao.readByPrimaryKey(challenger.getId());
-        challenged = playerDao.readByPrimaryKey(challenged.getId());
+        Player challenger = playerDao.readByPrimaryKey(challenger_id);
+        Player challenged = playerDao.readByPrimaryKey(challenged_id);
         try {
 
             // logic

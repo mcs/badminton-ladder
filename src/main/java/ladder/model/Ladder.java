@@ -2,7 +2,6 @@ package ladder.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -16,7 +15,7 @@ public class Ladder extends AbstractEntity {
 
     @Column(nullable = false)
     private String name;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "ladder_id")
     @IndexColumn(name = "player_rank")
     private List<Player> players = new ArrayList<Player>();
