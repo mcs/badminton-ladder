@@ -1,5 +1,8 @@
 package ladder.action;
 
+import java.util.List;
+import ladder.dao.PlayerDao;
+import ladder.model.Player;
 import ladder.model.User;
 import ladder.service.UserService;
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -18,9 +21,11 @@ public class LoginActionBean extends BaseActionBean {
 
     @Validate(required = true)
     public String username, password;
+    private User user;
     @SpringBean
     private UserService userService;
-    private User user;
+    @SpringBean
+    private PlayerDao playerDao;
 
     @DefaultHandler
     @DontValidate
@@ -36,11 +41,19 @@ public class LoginActionBean extends BaseActionBean {
         user = userService.login(username, password);
         if (user != null) {
             // success
+            // store user in context
             getContext().setUser(user);
+            // load all players belonging to this user and store them in the context
+            List<Player> players = playerDao.findByUser(user);
+            getContext().setPlayers(players);
+            // choose the first player, if one exists
+            if (!players.isEmpty())
+                getContext().setPlayer(players.get(0));
+            // create welcome message
             getContext().getMessages().add(new SimpleMessage("Willkommen, {0}", user.getLogin()));
             return new RedirectResolution(IndexActionBean.class);
         }
-        // fail
+        // failure (probably login invalid)
         getContext().getValidationErrors().addGlobalError(new SimpleError("Der Login ist nicht gültig"));
         return getContext().getSourcePageResolution();
     }

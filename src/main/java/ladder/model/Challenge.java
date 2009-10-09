@@ -16,6 +16,11 @@ public class Challenge extends AbstractEntity {
     public Challenge() {
     }
 
+    public Challenge(Player challenger, Player challenged) {
+        this.challenger = challenger;
+        this.challenged = challenged;
+    }
+
     public Player getChallenger() {
         return challenger;
     }

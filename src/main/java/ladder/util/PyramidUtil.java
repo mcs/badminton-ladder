@@ -1,8 +1,12 @@
 package ladder.util;
 
+import ladder.model.Player;
+import net.sourceforge.stripes.util.Log;
 import org.springframework.util.Assert;
 
 public class PyramidUtil {
+
+    private static final Log log = Log.getInstance(PyramidUtil.class);
 
     private PyramidUtil() {
         // static utility class
@@ -46,4 +50,19 @@ public class PyramidUtil {
         return row * (row + 1) / 2;
     }
 
+    public static boolean isChallengeAllowed(Player challenger, Player challenged) {
+        if (!challenger.getLadder().equals(challenged.getLadder())) {
+            log.warn("Players not in same ladder (" + challenger + ", " + challenged + ")");
+            return false;
+        }
+        // logic
+        int rankChallenger = challenger.getLadder().getRank(challenger);
+        int rankChallenged = challenged.getLadder().getRank(challenged);
+        if (rankChallenged >= rankChallenger) {
+            return false;
+        }
+
+        int rowChallenger = PyramidUtil.getRowForRank(rankChallenger);
+        return rankChallenger - rowChallenger < rankChallenged;
+    }
 }

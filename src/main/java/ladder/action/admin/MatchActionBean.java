@@ -25,12 +25,14 @@ import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import net.sourceforge.stripes.validation.ValidationErrors;
 import net.sourceforge.stripes.validation.ValidationMethod;
 
-@RolesAllowed("ENTER_RESULT")
+@RolesAllowed({
+    "ENTER_RESULT",
+    "VIEW_LADDER if ${user eq player.user}"
+})
 @StrictBinding
 public class MatchActionBean extends BaseActionBean {
 
     private static final Log log = Log.getInstance(MatchActionBean.class);
-
     @ValidateNestedProperties({
         @Validate(field = "id", required = true)
     })
@@ -39,13 +41,13 @@ public class MatchActionBean extends BaseActionBean {
         @Validate(field = "id", required = true)
     })
     public Player loser;
+    private Ladder ladder;
     @SpringBean
     private LadderDao ladderDao;
     @SpringBean
     private PlayerDao playerDao;
     @SpringBean
     private LadderService ladderService;
-    private Ladder ladder;
 
     public Ladder getLadder() {
         return ladder;
@@ -75,8 +77,7 @@ public class MatchActionBean extends BaseActionBean {
 
     @ValidationMethod(on = "setResult")
     public void checkIfChallengeIsAllowed(ValidationErrors errors) {
-        if (!ladderService.isChallengeAllowed(winner.getId(), loser.getId())
-                && !ladderService.isChallengeAllowed(loser.getId(), winner.getId())) {
+        if (!ladderService.isChallengeAllowed(winner.getId(), loser.getId()) && !ladderService.isChallengeAllowed(loser.getId(), winner.getId())) {
             winner = playerDao.readByPrimaryKey(winner.getId());
             loser = playerDao.readByPrimaryKey(loser.getId());
             errors.addGlobalError(new SimpleError("Die Spieler {2} und {3} dürfen aufgrund der Spielregeln nicht gegeneinander spielen.", winner.getName(), loser.getName()));

@@ -1,6 +1,5 @@
 package ladder.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,6 +20,8 @@ public class Player extends AbstractEntity {
      */
     @JoinColumn(name = "ladder_id", nullable = true, insertable = false, updatable = false)
     private Ladder ladder;
+    @ManyToOne
+    private User user;
 
     public Player() {
     }
@@ -39,6 +40,14 @@ public class Player extends AbstractEntity {
 
     public void setLadder(Ladder ladder) {
         this.ladder = ladder;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -69,6 +78,6 @@ public class Player extends AbstractEntity {
 
     @Override
     public String toString() {
-        return String.format("'%s' in ladder '%s'", name, ladder);
+        return String.format("%s (%s)", name, ladder.getName());
     }
 }

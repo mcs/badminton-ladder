@@ -16,7 +16,7 @@ public class User extends AbstractEntity {
     @Embedded
     private Password password;
     private String email;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Role role;
 
     public String getLogin() {

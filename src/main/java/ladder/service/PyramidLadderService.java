@@ -17,45 +17,29 @@ public class PyramidLadderService implements LadderService {
 
     private static final Log log = LogFactory.getLog(PyramidLadderService.class);
     @Autowired
-    private LadderDao ladderDao;
-    @Autowired
     private PlayerDao playerDao;
 
     @Override
     public void enterMatchResult(long winner_id, long loser_id) {
         // init
-        Ladder ladder = ladderDao.readAll().get(0);
         Player winner = playerDao.readByPrimaryKey(winner_id);
         Player loser = playerDao.readByPrimaryKey(loser_id);
-        
-        // logic
-        int rankLoser = ladder.getRank(loser);
-        int rankWinner = ladder.getRank(winner);
-        if (rankLoser < rankWinner) {
-            ladder.setRank(winner, rankLoser);
+        if (PyramidUtil.isChallengeAllowed(winner, loser) || PyramidUtil.isChallengeAllowed(loser, winner)) {
+            // logic
+            Ladder ladder = winner.getLadder();
+            int rankLoser = ladder.getRank(loser);
+            int rankWinner = ladder.getRank(winner);
+            if (rankLoser < rankWinner) {
+                ladder.setRank(winner, rankLoser);
+            }
         }
     }
 
     @Override
     public boolean isChallengeAllowed(long challenger_id, long challenged_id) {
         // init
-        Ladder ladder = ladderDao.readAll().get(0);
         Player challenger = playerDao.readByPrimaryKey(challenger_id);
         Player challenged = playerDao.readByPrimaryKey(challenged_id);
-        try {
-
-            // logic
-            int rankChallenger = ladder.getRank(challenger);
-            int rankChallenged = ladder.getRank(challenged);
-            if (rankChallenged > rankChallenger) {
-                return false;
-            }
-
-            int rowChallenger = PyramidUtil.getRowForRank(rankChallenger);
-            return rankChallenger - rowChallenger < rankChallenged;
-        } catch (IllegalArgumentException e) {
-            log.warn("Player not in ladder", e);
-            return false;
-        }
+        return PyramidUtil.isChallengeAllowed(challenger, challenged);
     }
 }

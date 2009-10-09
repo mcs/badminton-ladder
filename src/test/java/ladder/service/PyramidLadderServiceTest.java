@@ -23,7 +23,7 @@ public class PyramidLadderServiceTest extends BadmintonTestFixture {
         Player loser = ladder.getPlayer(2);
         assertThat(ladder.getRank(winner), is(3));
         assertThat(ladder.getRank(loser), is(2));
-        ladderService.enterMatchResult(winner, loser);
+        ladderService.enterMatchResult(winner.getId(), loser.getId());
         assertThat(ladder.getRank(winner), is(2));
         assertThat(ladder.getRank(loser), is(3));
     }
@@ -33,7 +33,7 @@ public class PyramidLadderServiceTest extends BadmintonTestFixture {
         Ladder ladder = ladderDao.readAll().get(0);
         Player winner = ladder.getPlayer(3);
         Player loser = ladder.getPlayer(1);
-        ladderService.enterMatchResult(winner, loser);
+        ladderService.enterMatchResult(winner.getId(), loser.getId());
         assertThat(ladder.getRank(winner), is(1));
         assertThat(ladder.getRank(loser), is(2));
     }
@@ -46,12 +46,13 @@ public class PyramidLadderServiceTest extends BadmintonTestFixture {
         Player p2 = players.get(1);
         Player p3 = players.get(2);
 
-        assertThat(ladderService.isChallengeAllowed(p2, p1), is(true));
-        assertThat(ladderService.isChallengeAllowed(p1, p2), is(false));
-        assertThat(ladderService.isChallengeAllowed(p3, p2), is(true));
-        assertThat(ladderService.isChallengeAllowed(p2, p3), is(false));
-        assertThat(ladderService.isChallengeAllowed(p1, p3), is(false));
-        assertThat(ladderService.isChallengeAllowed(p3, p1), is(false));
+        assertThat(ladderService.isChallengeAllowed(p2.getId(), p1.getId()), is(true));
+        assertThat(ladderService.isChallengeAllowed(p1.getId(), p2.getId()), is(false));
+        assertThat(ladderService.isChallengeAllowed(p3.getId(), p2.getId()), is(true));
+        assertThat(ladderService.isChallengeAllowed(p2.getId(), p3.getId()), is(false));
+        assertThat(ladderService.isChallengeAllowed(p1.getId(), p3.getId()), is(false));
+        assertThat(ladderService.isChallengeAllowed(p3.getId(), p1.getId()), is(false));
+        assertThat(ladderService.isChallengeAllowed(p1.getId(), p1.getId()), is(false));
     }
 
 }

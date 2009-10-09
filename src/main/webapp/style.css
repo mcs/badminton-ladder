@@ -40,7 +40,7 @@ body {
     padding: 0px;
 }
 
-#navLinks a {
+#navLinks a, #navLinks select {
     /* display: block; */
     width: 85px;
     padding: 4px 4px 4px 10px;

@@ -33,7 +33,7 @@ public class SecurityManager extends InstanceBasedSecurityManager implements Sec
             if (!isUserAuthenticated(bean, handler)) {
                 RedirectResolution resolution = new RedirectResolution(LoginActionBean.class);
                 if (bean.getContext().getRequest().getMethod().equalsIgnoreCase("GET")) {
-                    String loginUrl = ((BaseActionBean) bean).getLastUrl();
+                    String loginUrl = ((BaseActionBean) bean).getContext().getLastUrl();
                     resolution.addParameter("loginUrl", loginUrl);
                 }
                 return resolution;

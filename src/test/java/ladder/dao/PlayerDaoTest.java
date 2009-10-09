@@ -15,7 +15,7 @@ public class PlayerDaoTest extends BadmintonTestFixture {
     @Test
     public void allPersistedFromFixture() {
         List<Player> players = playerDao.readAll();
-        assertThat(players.size(), is(16));
+        assertThat(players.size(), is(17));
         for (Player p : players) {
             assertThat(p.getId(), is(notNullValue()));
         }
