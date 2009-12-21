@@ -50,6 +50,10 @@ public class Player extends AbstractEntity {
         this.user = user;
     }
 
+    public int getRank() {
+        return ladder.getRank(this);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -78,6 +82,6 @@ public class Player extends AbstractEntity {
 
     @Override
     public String toString() {
-        return String.format("%s (%s)", name, ladder.getName());
+        return String.format("%s (%s)", name, ladder == null ? "<no ladder>" : ladder.getName());
     }
 }

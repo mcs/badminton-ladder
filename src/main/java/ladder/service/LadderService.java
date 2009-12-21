@@ -1,8 +1,15 @@
 package ladder.service;
 
+import java.util.List;
+import ladder.model.Player;
+
 public interface LadderService {
 
-    void enterMatchResult(long winner_id, long loser_id);
+    void challenge(Player challenger, Player challenged);
 
-    public boolean isChallengeAllowed(long player1_id, long player2_id);
+    boolean isChallengeAllowed(Player challenger, Player challenged);
+
+    void enterMatchResult(Player winner, Player loser);
+
+    List<Player> getPossibleEnemies(Player p);
 }

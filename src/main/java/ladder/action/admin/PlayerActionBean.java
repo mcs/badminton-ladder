@@ -8,7 +8,6 @@ import ladder.model.Ladder;
 import ladder.model.Player;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.StrictBinding;
@@ -30,8 +29,6 @@ public class PlayerActionBean extends BaseActionBean {
     private Ladder ladder;
     @SpringBean
     private LadderDao ladderDao;
-    @SpringBean
-    private PlayerDao playerDao;
 
     public Ladder getLadder() {
         return ladder;

@@ -1,10 +1,13 @@
 package ladder.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +21,8 @@ public class User extends AbstractEntity {
     private String email;
     @ManyToOne
     private Role role;
+    @OneToMany(mappedBy = "user")
+    private List<Player> players = new ArrayList<Player>();
 
     public String getLogin() {
         return login;
@@ -49,6 +54,10 @@ public class User extends AbstractEntity {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 
     @Override

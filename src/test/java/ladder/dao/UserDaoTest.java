@@ -1,7 +1,7 @@
 
 package ladder.dao;
 
-import ladder.BadmintonTestFixture;
+import ladder.BaseTestFixture;
 import ladder.model.Role;
 import ladder.model.User;
 import org.junit.Test;
@@ -9,22 +9,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
-public class UserDaoTest extends BadmintonTestFixture {
+public class UserDaoTest extends BaseTestFixture {
 
     @Autowired
-    private UserDao instance;
+    private UserDao userDao;
 
     @Test
-    public void testFindByLoginNotOkay() {
-        System.out.println("findByLogin");
-        User result = instance.findByLogin("noname");
+    public void shouldFindNooneForWrongLogin() {
+        // when
+        User result = userDao.findByLogin("noname");
+        
+        // then
         assertThat(result, is(nullValue()));
     }
 
     @Test
-    public void testFindByLoginOkay() {
-        System.out.println("findByLogin");
-        User result = instance.findByLogin("admin");
+    public void shouldFindAdminForCorrectLogin() {
+        // when
+        User result = userDao.findByLogin("admin");
+        
+        // then
         assertThat(result, is(notNullValue()));
         assertThat(result.getRole(), equalTo(new Role("Administrator")));
     }

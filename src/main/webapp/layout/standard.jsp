@@ -17,7 +17,9 @@
                 </div>
 
                 <div id="inhalt">
-                    <s:messages/><s:errors/>
+                    <s:errors/>
+                    <span style="color: red;"><s:messages key="errors"/></span>
+                    <s:messages/>
                     <s:layout-component name="contents"/>
                 </div>
 

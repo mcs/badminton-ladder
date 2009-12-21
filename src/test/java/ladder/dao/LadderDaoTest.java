@@ -1,22 +1,23 @@
-
 package ladder.dao;
 
-import ladder.BadmintonTestFixture;
+import ladder.BaseTestFixture;
 import ladder.model.Ladder;
 import ladder.model.Player;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
-public class LadderDaoTest extends BadmintonTestFixture {
-
-    public LadderDaoTest() {
-    }
+public class LadderDaoTest extends BaseTestFixture {
 
     @Test
-    public void testPersistedLadder() {
-        Ladder ladder = ladderDao.readAll().get(0);
-        System.out.println(ladder);
+    public void shouldFindNamedLadder() {
+        // given
+        long id = 1;
+
+        // when
+        Ladder ladder = ladderDao.readByPrimaryKey(id);
+
+        // then
         assertThat(ladder.size(), is(16));
         for (Player p : ladder.getPlayers()) {
             assertThat(p.getId(), is(notNullValue()));

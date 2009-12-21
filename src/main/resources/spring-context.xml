@@ -8,7 +8,7 @@
             http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
             http://schemas.synyx.org/hades http://schemas.synyx.org/hades/hades.xsd
             http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
-            http://www.springframework.org/schema/context http://www.springframework.org/schema/tx/spring-context-2.5.xsd">
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
     <!-- import properties -->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -63,6 +63,5 @@
     <!-- Services -->
     <bean id="ladderService" class="ladder.service.PyramidLadderService"/>
     <bean id="userService" class="ladder.service.UserServiceImpl"/>
-    <bean id="challengeService" class="ladder.service.ChallengeService"/>
 
 </beans>

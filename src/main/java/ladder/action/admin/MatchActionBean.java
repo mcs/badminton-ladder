@@ -4,7 +4,6 @@ import javax.annotation.security.RolesAllowed;
 import ladder.action.BaseActionBean;
 import ladder.action.LadderActionBean;
 import ladder.dao.LadderDao;
-import ladder.dao.PlayerDao;
 import ladder.model.Ladder;
 import ladder.model.Player;
 import ladder.service.LadderService;
@@ -45,8 +44,6 @@ public class MatchActionBean extends BaseActionBean {
     @SpringBean
     private LadderDao ladderDao;
     @SpringBean
-    private PlayerDao playerDao;
-    @SpringBean
     private LadderService ladderService;
 
     public Ladder getLadder() {
@@ -60,6 +57,8 @@ public class MatchActionBean extends BaseActionBean {
     @Before(stages = {LifecycleStage.BindingAndValidation, LifecycleStage.CustomValidation})
     public void populate() {
         ladder = ladderDao.readAll().get(0);
+        winner = playerDao.readByPrimaryKey(winner.getId());
+        loser = playerDao.readByPrimaryKey(loser.getId());
     }
 
     @DefaultHandler
@@ -77,15 +76,13 @@ public class MatchActionBean extends BaseActionBean {
 
     @ValidationMethod(on = "setResult")
     public void checkIfChallengeIsAllowed(ValidationErrors errors) {
-        if (!ladderService.isChallengeAllowed(winner.getId(), loser.getId()) && !ladderService.isChallengeAllowed(loser.getId(), winner.getId())) {
-            winner = playerDao.readByPrimaryKey(winner.getId());
-            loser = playerDao.readByPrimaryKey(loser.getId());
+        if (!ladderService.isChallengeAllowed(winner, loser) && !ladderService.isChallengeAllowed(loser, winner)) {
             errors.addGlobalError(new SimpleError("Die Spieler {2} und {3} dürfen aufgrund der Spielregeln nicht gegeneinander spielen.", winner.getName(), loser.getName()));
         }
     }
 
     public Resolution setResult() {
-        ladderService.enterMatchResult(winner.getId(), loser.getId());
+        ladderService.enterMatchResult(winner, loser);
         getContext().getMessages().add(new SimpleMessage("Das Match wurde eingetragen."));
         return new RedirectResolution(LadderActionBean.class);
     }

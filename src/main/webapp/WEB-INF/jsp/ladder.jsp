@@ -1,7 +1,6 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ include file="/taglibs.jsp" %>
 
-<s:useActionBean var="matchActionBean" beanclass="ladder.action.admin.MatchActionBean"/>
 <s:useActionBean var="playerActionBean" beanclass="ladder.action.admin.PlayerActionBean"/>
 <s:useActionBean var="challengeActionBean" beanclass="ladder.action.ChallengeActionBean" event="doNothing"/>
 
@@ -26,10 +25,12 @@
                         <td><c:out value="${player.name}"/></td>
                             <sec:allowed bean="challengeActionBean">
                             <td>
-                                <s:link beanclass="${challengeActionBean.class}">
-                                    <s:param name="challenged.id" value="${player.id}"/>
-                                    Herausfordern
-                                </s:link>
+                                <c:if test="${fn:contains(actionBean.possibleEnemies, player)}">
+                                    <s:link beanclass="${challengeActionBean.class}" event="step1">
+                                        <s:param name="challenged.id" value="${player.id}"/>
+                                        Herausfordern
+                                    </s:link>
+                                </c:if>
                             </td>
                         </sec:allowed>
                     </tr>
@@ -39,7 +40,7 @@
         <sec:allowed bean="playerActionBean">
             <h2>Adminbereich</h2>
             <s:link beanclass="${playerActionBean.class}" event="addPlayer">
-                <s:param name="ladder.id" value="${actionBean.ladder.id}"/>
+                <s:param name="ladder.id" value="${player.ladder.id}"/>
                 Neuen Spieler hinzuf&uuml;gen...
             </s:link>
         </sec:allowed>

@@ -1,9 +1,11 @@
 package ladder;
 
+import ladder.dao.ChallengeDao;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import ladder.dao.LadderDao;
 import ladder.dao.PlayerDao;
+import ladder.dao.UserDao;
 import ladder.model.Ladder;
 import ladder.model.Player;
 import org.junit.Before;
@@ -18,13 +20,17 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:spring-context.xml")
 @Transactional
-public class BadmintonTestFixture extends AbstractJpaTests {
+public class BaseTestFixture extends AbstractJpaTests {
 
     public static final String PLAYER_PREFIX = "Player #";
     @Autowired
     protected LadderDao ladderDao;
     @Autowired
     protected PlayerDao playerDao;
+    @Autowired
+    protected UserDao userDao;
+    @Autowired
+    protected ChallengeDao challengeDao;
 
     @Before
     public void initMocks() {

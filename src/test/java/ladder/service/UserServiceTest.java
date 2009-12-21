@@ -1,17 +1,17 @@
 package ladder.service;
 
-import ladder.BadmintonTestFixture;
+import ladder.BaseTestFixture;
 import ladder.dao.UserDao;
 import ladder.model.Password;
 import ladder.model.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import static org.mockito.Mockito.*;
+import static org.mockito.BDDMockito.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
-public class UserServiceTest extends BadmintonTestFixture {
+public class UserServiceTest extends BaseTestFixture {
 
     @Mock
     private UserDao userDao;
@@ -34,7 +34,7 @@ public class UserServiceTest extends BadmintonTestFixture {
 
     @Before
     public void initUserDao() {
-        when(userDao.findByLogin(login)).thenReturn(user);
+        given(userDao.findByLogin(login)).willReturn(user);
     }
 
     

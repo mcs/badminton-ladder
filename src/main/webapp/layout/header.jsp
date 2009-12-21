@@ -34,10 +34,10 @@
         <c:if test="${not empty player}">
             <s:form beanclass="${actionBean.class}">
                 ausw&auml;hlbare Spieler:
-                <s:select name="player.id" onchange="submit()">
-                    <s:options-collection collection="${players}" value="id"/>
+                <s:select name="selectedPlayer.id">
+                    <s:options-collection collection="${players}" value="id" />
                 </s:select>
-                <s:submit name="changeSelectedPlayer" value="Ändern"/>
+                <s:submit name="changeSelectedPlayer">Ändern</s:submit>
             </s:form>
         </c:if>
     </div>

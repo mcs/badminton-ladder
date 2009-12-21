@@ -24,8 +24,6 @@ public class LoginActionBean extends BaseActionBean {
     private User user;
     @SpringBean
     private UserService userService;
-    @SpringBean
-    private PlayerDao playerDao;
 
     @DefaultHandler
     @DontValidate

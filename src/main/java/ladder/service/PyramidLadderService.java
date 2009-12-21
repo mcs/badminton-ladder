@@ -1,29 +1,59 @@
 package ladder.service;
 
-import ladder.dao.LadderDao;
+import java.util.ArrayList;
+import java.util.List;
+import ladder.dao.ChallengeDao;
 import ladder.dao.PlayerDao;
+import ladder.model.Challenge;
 import ladder.model.Ladder;
 import ladder.model.Player;
 import ladder.util.PyramidUtil;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class PyramidLadderService implements LadderService {
 
-    private static final Log log = LogFactory.getLog(PyramidLadderService.class);
-    @Autowired
+    private ChallengeDao challengeDao;
     private PlayerDao playerDao;
 
     @Override
-    public void enterMatchResult(long winner_id, long loser_id) {
+    public boolean isChallengeAllowed(Player challenger, Player challenged) {
+        // preconditions
+        if (challenger == null || challenged == null) {
+            throw new IllegalArgumentException("At least one player was null!");
+        }
         // init
-        Player winner = playerDao.readByPrimaryKey(winner_id);
-        Player loser = playerDao.readByPrimaryKey(loser_id);
+        boolean allowed = PyramidUtil.isChallengeAllowed(challenger, challenged);
+        allowed &= !challengeExists(new Challenge(challenger, challenged));
+        return allowed;
+    }
+
+    @Override
+    @Transactional
+    public void challenge(Player challenger, Player challenged) {
+        // preconditions
+        if (!isChallengeAllowed(challenger, challenged)) {
+            throw new IllegalArgumentException("Challenge not allowed!");
+        }
+        if (challenger.getLadder().equals(challenged.getLadder())) {
+            // create the challenge
+            Challenge c = new Challenge();
+            c.setChallenger(challenger);
+            c.setChallenged(challenged);
+            if (!challengeExists(c)) {
+                challengeDao.save(c);
+            } else {
+                throw new RuntimeException("Challenge already exists.");
+            }
+        }
+    }
+
+    @Override
+    public void enterMatchResult(Player winner, Player loser) {
+        // init
         if (PyramidUtil.isChallengeAllowed(winner, loser) || PyramidUtil.isChallengeAllowed(loser, winner)) {
             // logic
             Ladder ladder = winner.getLadder();
@@ -36,10 +66,28 @@ public class PyramidLadderService implements LadderService {
     }
 
     @Override
-    public boolean isChallengeAllowed(long challenger_id, long challenged_id) {
-        // init
-        Player challenger = playerDao.readByPrimaryKey(challenger_id);
-        Player challenged = playerDao.readByPrimaryKey(challenged_id);
-        return PyramidUtil.isChallengeAllowed(challenger, challenged);
+    public List<Player> getPossibleEnemies(Player p) {
+        Ladder ladder = p.getLadder();
+        List<Player> result = new ArrayList<Player>();
+        for (Player enemy : ladder.getPlayers()) {
+            if (PyramidUtil.isChallengeAllowed(p, enemy)) {
+                result.add(enemy);
+            }
+        }
+        return result;
+    }
+
+    private boolean challengeExists(Challenge c) {
+        return !challengeDao.readByExample(c).isEmpty();
+    }
+
+    @Autowired
+    protected void setChallengeDao(ChallengeDao challengeDao) {
+        this.challengeDao = challengeDao;
+    }
+
+    @Autowired
+    protected void setPlayerDao(PlayerDao playerDao) {
+        this.playerDao = playerDao;
     }
 }
