@@ -229,7 +229,7 @@
             <!-- unit testing framework, v4.4 is supported by Spring 2.5.x -->
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.4</version>
+            <version>4.13.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
